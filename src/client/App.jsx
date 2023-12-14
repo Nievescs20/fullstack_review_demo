@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AllRecipes from "./components/AllRecipes";
 import SingleRecipe from "./components/SingleRecipe";
 import Navbar from "./components/Navbar";
@@ -30,9 +30,10 @@ function App() {
       <Navbar user={user} setToken={setToken} />
       {user === "loggedIn" ? (
         <Routes>
-          <Route path="/" element={<AllRecipes />} />
+          <Route index path="/" element={<AllRecipes />} />
           <Route path="/:id" element={<SingleRecipe />} />
           <Route path="/createrecipe" element={<CreateRecipe />} />
+          {/* <Route  element={<Navigate to="/" replace={true} />} /> */}
         </Routes>
       ) : (
         <Routes>
@@ -40,6 +41,7 @@ function App() {
           <Route path="/:id" element={<SingleRecipe />} />
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/register" element={<Register setToken={setToken} />} />
+          {/* <Route index element={<Navigate to="/" replace={true} />} /> */}
         </Routes>
       )}
     </div>

@@ -67,6 +67,30 @@ async function seed() {
       userId: sarah.id,
     },
   });
+
+  const comment1 = await prisma.comment.create({
+    data: {
+      message: "Delicious, I loved it!!",
+      userId: jill.id,
+      recipeId: pbj.id,
+    },
+  });
+
+  const comment2 = await prisma.comment.create({
+    data: {
+      message: "Not very good at all. Boooo",
+      userId: bob.id,
+      recipeId: macNCheese.id,
+    },
+  });
+
+  const comment3 = await prisma.comment.create({
+    data: {
+      message: "Was okay",
+      userId: sarah.id,
+      recipeId: yumYumSauce.id,
+    },
+  });
 }
 
 seed()
