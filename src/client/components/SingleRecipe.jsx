@@ -5,8 +5,10 @@ import axios from "axios";
 function SingleRecipe() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
+  console.log("recipe", recipe);
   const [message, setMessage] = useState("");
-  console.log("message", message);
+  // const [totalLikes, setTotalLikes] = useState(recipe.Like) || 0;
+  // console.log("total Likes", totalLikes);
 
   useEffect(() => {
     async function getRecipe() {
@@ -37,6 +39,23 @@ function SingleRecipe() {
     }
   }
 
+  async function handleCreateLike() {
+    try {
+      const { data: like } = await axios.post(
+        `/api/recipes/like/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + window.localStorage.getItem("TOKEN"),
+          },
+        }
+      );
+      setRecipe({ ...recipe, Like: [...recipe.Like, like] });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   if (!recipe.id) {
     return <div>loading...</div>;
   }
@@ -51,6 +70,8 @@ function SingleRecipe() {
         <h3>Ingredients: {recipe.ingredients}</h3>
         <h3>Directions: {recipe.directions}</h3>
         <h3>Gluten Free: {recipe.isGlutenFree ? "Yes" : "No"}</h3>
+        <h3>Likes#: {recipe.Like.length}</h3>
+        <h3 onClick={handleCreateLike}>👍🏼</h3>
       </div>
       <hr />
       <div>

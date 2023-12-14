@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 async function verify(req, res, next) {
   const bearer = req.headers.authorization;
+  console.log("bearer", bearer);
 
   if (!bearer) {
     res.status(401).send({ message: "No token provided, NOT AUTHORIZED!" });
@@ -9,6 +10,7 @@ async function verify(req, res, next) {
   }
 
   const [, token] = bearer.split(" ");
+  console.log("token", token);
 
   if (!token) {
     res.status(401).send({ message: "No token provided, NOT AUTHORIZED!" });

@@ -19,6 +19,9 @@ router.get("/:id", async (req, res, next) => {
       where: {
         id: +id,
       },
+      include: {
+        Like: true,
+      },
     });
     res.status(200).send(recipe);
   } catch (error) {
@@ -50,6 +53,21 @@ router.post("/", verify, async (req, res, next) => {
       },
     });
     res.status(201).send(recipe);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.post("/like/:id", verify, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const like = await prisma.like.create({
+      data: {
+        userId: req.user.id,
+        recipeId: +id,
+      },
+    });
+    res.status(201).send(like);
   } catch (error) {
     console.error(error);
   }
