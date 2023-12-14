@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import CreateRecipe from "./components/CreateRecipe";
 import axios from "axios";
+import MyFavorites from "./components/MyFavorites";
 
 function App() {
   const [user, setUser] = useState("");
@@ -33,6 +34,7 @@ function App() {
           <Route index path="/" element={<AllRecipes />} />
           <Route path="/:id" element={<SingleRecipe />} />
           <Route path="/createrecipe" element={<CreateRecipe />} />
+          <Route path="/favorites" element={<MyFavorites />} />
           {/* <Route  element={<Navigate to="/" replace={true} />} /> */}
         </Routes>
       ) : (

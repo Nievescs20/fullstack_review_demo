@@ -20,7 +20,7 @@ async function verify(req, res, next) {
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
-
+    console.log("user", req.user);
     next();
   } catch (error) {
     console.error(error);

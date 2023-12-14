@@ -11,16 +11,17 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  username String    @unique
+  id       Int        @id @default(autoincrement())
+  username String     @unique
   password String
   Recipe   Recipe[]
   Comment  Comment[]
   Like     Like[]
+  Favorite Favorite[]
 }
 
 model Recipe {
-  id           Int       @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   name         String
   description  String
   prepTime     Int
@@ -28,10 +29,11 @@ model Recipe {
   ingredients  String
   directions   String
   isGlutenFree Boolean
-  user         User      @relation(fields: [userId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
   userId       Int
   Comment      Comment[]
   Like         Like[]
+  Favorite     Favorite[]
 }
 
 model Comment {
@@ -45,6 +47,14 @@ model Comment {
 }
 
 model Like {
+  id       Int    @id @default(autoincrement())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   Int
+  recipe   Recipe @relation(fields: [recipeId], references: [id])
+  recipeId Int
+}
+
+model Favorite {
   id       Int    @id @default(autoincrement())
   user     User   @relation(fields: [userId], references: [id])
   userId   Int

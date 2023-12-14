@@ -11,6 +11,46 @@ router.get("/", async (req, res, next) => {
     console.error(error);
   }
 });
+router.get("/favorites", verify, async (req, res, next) => {
+  try {
+    const recipes = await prisma.favorite.findMany({
+      where: {
+        userId: req.user.id,
+      },
+      include: {
+        recipe: true,
+      },
+    });
+    res.status(200).send(recipes);
+  } catch (error) {}
+});
+
+router.post("/favorites/:id", verify, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const exists = await prisma.favorite.findFirst({
+      where: {
+        userId: req.user.id,
+        recipeId: +id,
+      },
+    });
+
+    if (exists) {
+      console.log("already exists");
+      return;
+    }
+
+    const fav = await prisma.favorite.create({
+      data: {
+        userId: req.user.id,
+        recipeId: +id,
+      },
+    });
+    res.status(201).send(fav);
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -61,6 +101,18 @@ router.post("/", verify, async (req, res, next) => {
 router.post("/like/:id", verify, async (req, res, next) => {
   const { id } = req.params;
   try {
+    const exists = await prisma.like.findFirst({
+      where: {
+        userId: req.user.id,
+        recipeId: +id,
+      },
+    });
+
+    if (exists) {
+      console.log("exists already");
+      return;
+    }
+
     const like = await prisma.like.create({
       data: {
         userId: req.user.id,

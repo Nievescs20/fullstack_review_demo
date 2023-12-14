@@ -17,6 +17,9 @@ function Navbar({ user, setToken }) {
           <Link to="/createrecipe">
             <button>Create Recipe</button>
           </Link>
+          <Link to="/favorites">
+            <button>My Favorites</button>
+          </Link>
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (

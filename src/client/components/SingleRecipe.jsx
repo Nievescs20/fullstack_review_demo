@@ -60,6 +60,21 @@ function SingleRecipe() {
     return <div>loading...</div>;
   }
 
+  async function handleAddToFav() {
+    try {
+      const { data: fav } = await axios.post(
+        `/api/recipes/favorites/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + window.localStorage.getItem("TOKEN"),
+          },
+        }
+      );
+      console.log("favorite", fav);
+    } catch (error) {}
+  }
+
   return (
     <div>
       <div>
@@ -72,6 +87,7 @@ function SingleRecipe() {
         <h3>Gluten Free: {recipe.isGlutenFree ? "Yes" : "No"}</h3>
         <h3>Likes#: {recipe.Like.length}</h3>
         <h3 onClick={handleCreateLike}>👍🏼</h3>
+        <button onClick={handleAddToFav}>Add To Favorites</button>
       </div>
       <hr />
       <div>
