@@ -15,12 +15,10 @@ async function verify(req, res, next) {
     return;
   }
 
-  console.log("token", token);
-
   try {
     const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
-    console.log("req", req);
+
     next();
   } catch (error) {
     console.error(error);

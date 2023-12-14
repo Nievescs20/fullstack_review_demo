@@ -3,8 +3,13 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 function AllRecipes() {
+  const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
-  console.log("recipes", recipes);
+
+  const filtered = recipes.filter(
+    (recipe) =>
+      recipe.name.includes(search) || recipe.ingredients.includes(search)
+  );
 
   useEffect(() => {
     async function getRecipes() {
@@ -21,19 +26,29 @@ function AllRecipes() {
   return (
     <div>
       <h2>All Recipes</h2>
-      {recipes.map((recipe) => (
-        <div key={recipe.id} style={{ border: "2px solid black" }}>
-          <Link to={`/${recipe.id}`}>
-            <h3>Name: {recipe.name}</h3>
-          </Link>
-          <h3>Description: {recipe.description}</h3>
-          <h3>Prep Time: {recipe.prepTime}</h3>
-          <h3>Cook Time: {recipe.cookTime}</h3>
-          <h3>Ingredients: {recipe.ingredients}</h3>
-          <h3>Directions: {recipe.directions}</h3>
-          <h3>Gluten Free: {recipe.isGlutenFree ? "Yes" : "No"}</h3>
-        </div>
-      ))}
+      <input
+        placeholder="search..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button onClick={() => setSearch("")}>X</button>
+      {search.length == 0
+        ? recipes.map((recipe) => (
+            <div key={recipe.id} style={{ border: "2px solid black" }}>
+              <Link to={`/${recipe.id}`}>
+                <h3>Name: {recipe.name}</h3>
+              </Link>
+              <h3>Description: {recipe.description}</h3>
+            </div>
+          ))
+        : filtered.map((recipe) => (
+            <div key={recipe.id} style={{ border: "2px solid black" }}>
+              <Link to={`/${recipe.id}`}>
+                <h3>Name: {recipe.name}</h3>
+              </Link>
+              <h3>Description: {recipe.description}</h3>
+            </div>
+          ))}
     </div>
   );
 }

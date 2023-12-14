@@ -5,7 +5,6 @@ import axios from "axios";
 function SingleRecipe() {
   const { id } = useParams();
   const [recipe, setRecipe] = useState({});
-  console.log("recipe", recipe);
 
   useEffect(() => {
     async function getRecipe() {
