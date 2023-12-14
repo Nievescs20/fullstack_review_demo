@@ -41,7 +41,7 @@ function App() {
           <Route path="/:id" element={<SingleRecipe />} />
           <Route path="/login" element={<Login setToken={setToken} />} />
           <Route path="/register" element={<Register setToken={setToken} />} />
-          {/* <Route index element={<Navigate to="/" replace={true} />} /> */}
+          {/* <Route path="*" element={<Navigate to="/" replace={true} />} /> */}
         </Routes>
       )}
     </div>
