@@ -5,7 +5,16 @@ const { verify } = require("../util");
 
 router.get("/", async (req, res, next) => {
   try {
-    const recipes = await prisma.recipe.findMany();
+    const recipes = await prisma.recipe.findMany({
+      include: {
+        Like: true,
+      },
+      orderBy: {
+        Like: {
+          _count: "desc",
+        },
+      },
+    });
     res.status(200).send(recipes);
   } catch (error) {
     console.error(error);
@@ -61,6 +70,7 @@ router.get("/:id", async (req, res, next) => {
       },
       include: {
         Like: true,
+        Comment: true,
       },
     });
     res.status(200).send(recipe);

@@ -12,6 +12,7 @@ import MyFavorites from "./components/MyFavorites";
 
 function App() {
   const [user, setUser] = useState("");
+  console.log("user", user);
   const [token, setToken] = useState(window.localStorage.getItem("TOKEN"));
 
   useEffect(() => {

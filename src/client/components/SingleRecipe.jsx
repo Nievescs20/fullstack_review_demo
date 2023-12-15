@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function SingleRecipe() {
   const { id } = useParams();
+  const location = useLocation();
+  console.log("location", location);
   const [recipe, setRecipe] = useState({});
   console.log("recipe", recipe);
   const [message, setMessage] = useState("");
-  // const [totalLikes, setTotalLikes] = useState(recipe.Like) || 0;
-  // console.log("total Likes", totalLikes);
 
   useEffect(() => {
     async function getRecipe() {
@@ -33,6 +33,7 @@ function SingleRecipe() {
           },
         }
       );
+      setRecipe({ ...recipe, Comment: [...recipe.Comment, comment] });
       console.log("comment", comment);
     } catch (error) {
       console.error(error);
@@ -88,6 +89,13 @@ function SingleRecipe() {
         <h3>Likes#: {recipe.Like.length}</h3>
         <h3 onClick={handleCreateLike}>👍🏼</h3>
         <button onClick={handleAddToFav}>Add To Favorites</button>
+
+        <a
+          href={`mailto:?subject=I wanted you to see this recipe&body=Check out this site localhost:3000${location.pathname}.&
+   title=Share by Email`}
+        >
+          <button>Share</button>
+        </a>
       </div>
       <hr />
       <div>
@@ -100,6 +108,17 @@ function SingleRecipe() {
           style={{ height: "75px", width: "250px" }}
         />
         <button onClick={handleCreateComment}>Add Comment</button>
+      </div>
+      <div>
+        {recipe.Comment.map((comment) => (
+          <div
+            key={comment.id}
+            style={{ border: "2px solid black", padding: "4px" }}
+          >
+            <h3>{comment.message}</h3>
+            <h5>{comment.createdAt.slice(0, 10)}</h5>
+          </div>
+        ))}
       </div>
     </div>
   );

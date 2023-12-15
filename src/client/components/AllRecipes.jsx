@@ -32,23 +32,25 @@ function AllRecipes() {
         onChange={(e) => setSearch(e.target.value)}
       />
       <button onClick={() => setSearch("")}>X</button>
-      {search.length == 0
-        ? recipes.map((recipe) => (
-            <div key={recipe.id} style={{ border: "2px solid black" }}>
-              <Link to={`/${recipe.id}`}>
-                <h3>Name: {recipe.name}</h3>
-              </Link>
-              <h3>Description: {recipe.description}</h3>
-            </div>
-          ))
-        : filtered.map((recipe) => (
-            <div key={recipe.id} style={{ border: "2px solid black" }}>
-              <Link to={`/${recipe.id}`}>
-                <h3>Name: {recipe.name}</h3>
-              </Link>
-              <h3>Description: {recipe.description}</h3>
-            </div>
-          ))}
+      <div id="all_recipes_container">
+        {search.length == 0
+          ? recipes.map((recipe) => (
+              <div key={recipe.id} style={{ border: "2px solid black" }}>
+                <Link to={`/${recipe.id}`}>
+                  <h3>Name: {recipe.name}</h3>
+                </Link>
+                <h3>Description: {recipe.description}</h3>
+              </div>
+            ))
+          : filtered.map((recipe) => (
+              <div key={recipe.id} style={{ border: "2px solid black" }}>
+                <Link to={`/${recipe.id}`}>
+                  <h3>Name: {recipe.name}</h3>
+                </Link>
+                <h3>Description: {recipe.description}</h3>
+              </div>
+            ))}
+      </div>
     </div>
   );
 }
